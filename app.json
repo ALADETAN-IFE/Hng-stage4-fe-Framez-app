@@ -4,7 +4,7 @@
     "slug": "framez",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon/icon.png",
+    "icon": "./assets/icon/icon1024x1024.png",
     "scheme": "framez",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -15,9 +15,9 @@
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/icon/icon.png",
-        "backgroundImage": "./assets/icon/icon.png",
-        "monochromeImage": "./assets/icon/icon.png"
+        "foregroundImage": "./assets/icon/icon1024x1024.png",
+        "backgroundImage": "./assets/icon/icon1024x1024.png",
+        "monochromeImage": "./assets/icon/icon1024x1024.png"
       },
       "package": "com.ifecodes.framez",
       "edgeToEdgeEnabled": true,
@@ -25,7 +25,7 @@
     },
     "web": {
       "output": "static",
-      "favicon": "./assets/icon/icon.png"
+      "favicon": "./assets/icon/icon1024x1024.png"
     },
     "plugins": [
       "expo-router",
