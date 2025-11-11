@@ -15,9 +15,9 @@
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/icon/icon1024x1024.png",
-        "backgroundImage": "./assets/icon/icon1024x1024.png",
-        "monochromeImage": "./assets/icon/icon1024x1024.png"
+        "foregroundImage": "./assets/icon/light-logo-1024x1024.png",
+        "backgroundImage": "./assets/icon/logo-1024x1024.png",
+        "monochromeImage": "./assets/icon/logo-1024x1024.png"
       },
       "package": "com.ifecodes.framez",
       "edgeToEdgeEnabled": true,
