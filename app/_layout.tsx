@@ -7,12 +7,9 @@ import "./global.css";
 
 import UpdatePopup from '@/components/UpdatePopup';
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import { AuthProvider } from '@/hooks/useAuth';
 import { useCheckForUpdates } from '@/hooks/useCheckForUpdates';
 import { useState } from 'react';
-
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -20,19 +17,21 @@ export default function RootLayout() {
   const [modalVisible, setModalVisible] = useState(true);
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      {Platform.OS !== 'web' && (
-        <UpdatePopup
-          visible={modalVisible}
-          message={updateMessage}
-          updateAvailable={isUpdateAvailable}
-          onClose={() => setModalVisible(false)}
-        />
-      )}
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <AuthProvider>
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        {Platform.OS !== 'web' && (
+          <UpdatePopup
+            visible={modalVisible}
+            message={updateMessage}
+            updateAvailable={isUpdateAvailable}
+            onClose={() => setModalVisible(false)}
+          />
+        )}
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        </Stack>
+        <StatusBar style="auto" />
+      </ThemeProvider>
+    </AuthProvider>
   );
 }
