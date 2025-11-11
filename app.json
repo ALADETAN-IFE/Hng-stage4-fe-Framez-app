@@ -4,7 +4,7 @@
     "slug": "framez",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon/icon1024x1024.png",
+    "icon": "./assets/icon/logo-1024x1024.png",
     "scheme": "framez",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
