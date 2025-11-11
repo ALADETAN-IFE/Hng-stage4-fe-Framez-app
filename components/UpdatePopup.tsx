@@ -27,15 +27,23 @@ const UpdatePopup: React.FC<UpdatePopupProps> = ({
   return (
     <Modal animationType="fade" transparent={true} visible={visible}>
       <View className="flex-1 justify-center items-center bg-black/50">
-        <View className="bg-white p-6 rounded-lg shadow-lg">
-          <Text className="text-lg mb-4">{message}</Text>
+        <View className="bg-black shadow-slate-400 p-6 rounded-lg shadow-lg">
+          <Text className="text-lg mb-4 text-white">{message}</Text>
           {updateAvailable ? (
-            <TouchableOpacity
-              onPress={handleUpdate}
-              className="bg-blue-500 rounded-full px-6 py-2"
-            >
-              <Text className="text-white text-center">Update Now</Text>
-            </TouchableOpacity>
+            <View className="w-fit bg-green-500 flex-row justify-between">
+              <TouchableOpacity
+                onPress={handleUpdate}
+                className="bg-blue-500 rounded-full px-6 py-2"
+              >
+                <Text className="text-white text-center">Update Now</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={handleUpdate}
+                className="bg-blue-500 rounded-full px-6 py-2"
+              >
+                <Text className="text-white text-center">Update Now</Text>
+              </TouchableOpacity>
+            </View>
           ) : message !== "Checking for updates..." ? (
             <TouchableOpacity
               onPress={onClose}
