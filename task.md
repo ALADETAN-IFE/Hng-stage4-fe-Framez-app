@@ -1,5 +1,5 @@
 # Frontend Stage 4 Task Overview
-Build a mobile social application called Framez using :iphone: React Native. The app allows users to share posts. Each user has a profile where they can view their own posts and activity.
+Build a mobile social application called Framez using React Native. The app allows users to share posts. Each user has a profile where they can view their own posts and activity.
 This task focuses on building a functional, visually clean, and auth-integrated mobile app that demonstrates your ability to manage real-time data, authentication, and UI structure.
 ## Core Objectives
 Implement user authentication (sign-up, login, logout) using Firebase, Supabase, Convex, or Clerk.
@@ -39,7 +39,7 @@ A public GitHub repository with:
  - Clean commit history.
  - Setup instructions in a README.md file.
  - Clear explanation of chosen backend and features implemented.
- 
+
 A 2–3 minute demo video showing app functionality.
 Hosted http://appetize.io/ link
 

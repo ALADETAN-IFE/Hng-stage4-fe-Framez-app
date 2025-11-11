@@ -29,7 +29,7 @@ const UpdatePopup: React.FC<UpdatePopupProps> = ({
       <View className="flex-1 justify-center items-center bg-black/50">
         <View className="bg-black shadow-slate-400 p-6 rounded-lg shadow-lg">
           <Text className="text-lg mb-4 text-white">{message}</Text>
-          {!updateAvailable ? (
+          {updateAvailable ? (
             <View className="self-end gap-3 flex-row justify-between">
               <TouchableOpacity
                 onPress={onClose}

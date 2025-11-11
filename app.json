@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "framez",
+    "name": "Framez",
     "slug": "framez",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -32,8 +32,8 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/logo.png",
-          "imageWidth": 200,
+          "image": "./assets/logo-removebg-preview.png",
+          "imageWidth": 250,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff",
           "dark": {
@@ -52,6 +52,12 @@
         "projectId": "4ad2bc63-e5a8-45d0-92b0-8ca7ecacad81"
       }
     },
-    "owner": "ifecodes"
+    "owner": "ifecodes",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/4ad2bc63-e5a8-45d0-92b0-8ca7ecacad81"
+    }
   }
 }
