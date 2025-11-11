@@ -39,8 +39,10 @@ A public GitHub repository with:
  - Clean commit history.
  - Setup instructions in a README.md file.
  - Clear explanation of chosen backend and features implemented.
+ 
 A 2–3 minute demo video showing app functionality.
 Hosted http://appetize.io/ link
+
 ## Acceptance Criteria
 - User can register, log in, and log out successfully.
 - Auth session persists on app restart.
