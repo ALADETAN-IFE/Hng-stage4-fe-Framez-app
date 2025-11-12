@@ -1,22 +1,42 @@
-import { useEffect, useState } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { useRouter } from "expo-router";
-import { auth } from "@/lib/firebase";
+import { useRouter, useSegments } from "expo-router";
+import { useEffect } from "react";
+
+import { supabase } from "@/lib/supabase";
+import { useAuthStore } from "@/stores/authStore";
 
 export default function AuthWrapper({ children }: { children: React.ReactNode }) {
-  const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const segments = useSegments();
+  const { user, isLoading, initialize, setSession } = useAuthStore();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) router.replace("/(tabs)");
-      else router.replace("/signin");
-      setLoading(false);
+    initialize();
+  }, [initialize]);
+
+  useEffect(() => {
+    if (isLoading) return;
+
+    const inAuthGroup = segments.length > 0 && segments[0] === "(auth)";
+
+    if (!user && !inAuthGroup) {
+      router.replace("/signin");
+    } else if (user && inAuthGroup) {
+      router.replace("/(tabs)");
+    }
+  }, [user, isLoading, segments, router]);
+
+  useEffect(() => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
     });
 
-    return unsubscribe;
-  }, []);
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [setSession]);
 
-  if (loading) return null; // or splash screen
-  return children;
+  if (isLoading) return null;
+  return <>{children}</>;
 }

@@ -1,45 +1,52 @@
-import { auth, db } from "@/lib/firebase";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged,
-  User,
-} from "firebase/auth";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import type { User } from "@supabase/supabase-js";
 
-export interface UserProfile {
-  username: string;
-  email: string;
-  createdAt: Date;
-}
+import { supabase } from "@/lib/supabase";
 
-export const signUpUser = async (
-  email: string,
-  password: string,
-  username: string
-): Promise<User> => {
-  const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-  const user = userCredential.user;
-
-  await setDoc(doc(db, "users", user.uid), {
-    username,
-    email,
-    createdAt: new Date(),
+export const signInUser = async (email: string, password: string) => {
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: email.trim(),
+    password,
   });
 
-  return user;
+  if (error) throw error;
+  return data;
 };
 
-export const loginUser = async (email: string, password: string): Promise<User> => {
-  const userCredential = await signInWithEmailAndPassword(auth, email, password);
-  return userCredential.user;
+export const signUpUser = async (email: string, password: string, username: string) => {
+  const { data, error } = await supabase.auth.signUp({
+    email: email.trim(),
+    password,
+    options: {
+      data: {
+        username: username.trim(),
+      },
+    },
+  });
+
+  if (error) throw error;
+  return data;
 };
 
-export const logoutUser = async (): Promise<void> => {
-  await signOut(auth);
+export const signOutUser = async () => {
+  const { error } = await supabase.auth.signOut();
+  if (error) throw error;
+};
+
+export const getCurrentUser = async () => {
+  const { data, error } = await supabase.auth.getUser();
+  if (error) throw error;
+  return data.user;
 };
 
 export const subscribeToAuthChanges = (callback: (user: User | null) => void) => {
-  return onAuthStateChanged(auth, callback);
+  const {
+    data: { subscription },
+  } = supabase.auth.onAuthStateChange((_event, session) => {
+    callback(session?.user ?? null);
+  });
+
+  return () => {
+    subscription.unsubscribe();
+  };
 };
+

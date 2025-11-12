@@ -3,27 +3,36 @@
  * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
  */
 
-import { Platform } from 'react-native';
+import { Platform } from "react-native";
 
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
+const framezMidnight = "#050E1A";
+const framezNightfall = "#0B1423";
+const framezSlate = "#1C2836";
+const framezSky = "#59B2D9";
+const framezAccent = "#F6A33D";
 
 export const Colors = {
+  tint: framezSky,
+  accent: framezAccent,
   light: {
-    text: '#11181C',
-    background: '#fff',
-    tint: tintColorLight,
-    icon: '#687076',
-    tabIconDefault: '#687076',
-    tabIconSelected: tintColorLight,
+    text: "#F1F5F9",
+    background: framezMidnight,
+    surface: framezNightfall,
+    elevated: framezSlate,
+    tint: framezSky,
+    icon: "#9CA3AF",
+    tabIconDefault: "#64748B",
+    tabIconSelected: framezSky,
   },
   dark: {
-    text: '#ECEDEE',
-    background: '#151718',
-    tint: tintColorDark,
-    icon: '#9BA1A6',
-    tabIconDefault: '#9BA1A6',
-    tabIconSelected: tintColorDark,
+    text: "#F8FAFC",
+    background: "#020817",
+    surface: "#0F172A",
+    elevated: "#1E293B",
+    tint: framezSky,
+    icon: "#CBD5F5",
+    tabIconDefault: "#64748B",
+    tabIconSelected: framezSky,
   },
 };
 
