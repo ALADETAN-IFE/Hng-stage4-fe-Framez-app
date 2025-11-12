@@ -5,6 +5,7 @@ import { ActivityIndicator, FlatList, RefreshControl, Text, TouchableOpacity, Vi
 import { fetchProfile } from "@/services/profileService";
 import { useAuthStore } from "@/stores/authStore";
 import { usePostsStore } from "@/stores/postsStore";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function AccountScreen() {
   const { user, signOut } = useAuthStore();
@@ -55,7 +56,8 @@ export default function AccountScreen() {
   }
 
   return (
-    <View className="flex-1 bg-framez-midnight px-5 pt-6">
+    <SafeAreaView className="flex-1 bg-framez-midnight">
+    <View className="px-5 pt-6">
       <Text className="text-3xl font-bold text-white">My Profile</Text>
       <View className="mt-6 flex-row items-center gap-4 rounded-3xl border border-white/5 bg-framez-slate/60 p-5">
         <View className="h-16 w-16 items-center justify-center rounded-full bg-framez-accent">
@@ -120,5 +122,6 @@ export default function AccountScreen() {
       )}
       {error ? <Text className="mt-3 text-center text-sm text-red-400">{error}</Text> : null}
     </View>
+    </SafeAreaView>
   );
 }

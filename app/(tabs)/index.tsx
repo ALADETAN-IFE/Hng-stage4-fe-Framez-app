@@ -13,6 +13,7 @@ import {
 import { useAuthStore } from "@/stores/authStore";
 import { usePostsStore } from "@/stores/postsStore";
 import { pickImage, uploadImage } from "@/services/imageService";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HomeScreen() {
   const { user } = useAuthStore();
@@ -83,7 +84,8 @@ export default function HomeScreen() {
   };
 
   return (
-    <View className="flex-1 bg-framez-midnight px-5 pt-6">
+    <SafeAreaView className="flex-1 bg-framez-midnight">
+    <View className="px-5 pt-6 w-full md:w-9/10 lg:w-[700px]">
       <Text className="text-3xl font-bold text-white">Community Feed</Text>
       <View className="mt-5 rounded-3xl border border-white/5 bg-framez-slate/60 p-5 shadow-lg shadow-black/40">
         <Text className="mb-3 text-lg font-semibold text-white">Share a new frame</Text>
@@ -170,5 +172,6 @@ export default function HomeScreen() {
         />
       )}
     </View>
+    </SafeAreaView>
   );
 }

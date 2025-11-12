@@ -27,11 +27,11 @@ export default function SignInScreen() {
   return (
     <SafeAreaView className="flex-1 bg-framez-midnight justify-center items-center">
 
-    <View className="flex-1 px-6 pt-16 min-h-screen md:w-9/10 lg:w-[700px] justify-center items-center">
+    <View className="flex-1 px-6 pt-16 min-h-screen w-full md:w-9/10 lg:w-[700px] items-center">
       <View className="items-center w-full">
         <Image
           source={require("../../assets/logo-removebg-preview2.png")}
-          className="h-24 w-24"
+          className="h-40 w-72"
           resizeMode="contain"
         />
       </View>
@@ -39,7 +39,7 @@ export default function SignInScreen() {
       <Text className="mt-2 text-base text-framez-mist">
         Sign in to continue sharing your favorite moments.
       </Text>
-      <View className="mt-8 space-y-4 gap-3 w-full">
+      <View className="mt-8 space-y-4 gap-5 w-full">
         <TextInput
           className="rounded-2xl border border-white/10 bg-framez-slate/80 px-5 py-4 text-base text-white"
           placeholder="Email address"

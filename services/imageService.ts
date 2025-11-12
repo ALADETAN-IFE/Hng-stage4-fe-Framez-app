@@ -1,3 +1,4 @@
+import * as FileSystem from "expo-file-system";
 import * as ImagePicker from "expo-image-picker";
 import { Platform } from "react-native";
 
@@ -15,7 +16,7 @@ export const pickImage = async (): Promise<string | null> => {
 
   // Launch image picker
   const result = await ImagePicker.launchImageLibraryAsync({
-    mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    mediaTypes: ImagePicker.MediaType.Images,
     allowsEditing: true,
     aspect: [4, 3],
     quality: 0.8,
@@ -30,18 +31,32 @@ export const pickImage = async (): Promise<string | null> => {
 
 export const uploadImage = async (uri: string, userId: string): Promise<string | null> => {
   try {
-    // Convert local URI to blob
-    const response = await fetch(uri);
-    const blob = await response.blob();
+    // Read file as base64
+    const base64 = await FileSystem.readAsStringAsync(uri, {
+      encoding: FileSystem.EncodingType.Base64,
+    });
+
+    // Get file extension and determine content type
+    const fileExt = uri.split(".").pop()?.toLowerCase() || "jpg";
+    const contentType = fileExt === "png" ? "image/png" : fileExt === "gif" ? "image/gif" : "image/jpeg";
 
     // Generate unique filename
-    const fileExt = uri.split(".").pop();
     const fileName = `${userId}/${Date.now()}.${fileExt}`;
     const filePath = `posts/${fileName}`;
 
+    // Convert base64 to ArrayBuffer for Supabase Storage
+    // Supabase Storage accepts ArrayBuffer, Blob, File, or FormData
+    const byteCharacters = atob(base64);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const arrayBuffer = byteArray.buffer;
+
     // Upload to Supabase Storage
-    const { error } = await supabase.storage.from("posts").upload(filePath, blob, {
-      contentType: `image/${fileExt}`,
+    const { error } = await supabase.storage.from("posts").upload(filePath, arrayBuffer, {
+      contentType,
       upsert: false,
     });
 

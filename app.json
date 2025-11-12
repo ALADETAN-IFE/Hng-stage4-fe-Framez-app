@@ -34,7 +34,8 @@
         {
           "image": "./assets/logo-removebg-preview.png",
           "imageWidth": 250,
-          "resizeMode": "contain"
+          "resizeMode": "contain",
+          "backgroundColor": "#050E1A"
         }
       ]
     ],
@@ -45,10 +46,10 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "4ad2bc63-e5a8-45d0-92b0-8ca7ecacad81"
+        "projectId": "27aca14f-5b80-4565-b806-4aece4906ef3"
       }
     },
-    "owner": "ifecodes",
+    "owner": "ifecodes01",
     "runtimeVersion": {
       "policy": "appVersion"
     },

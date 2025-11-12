@@ -24,8 +24,7 @@ export default function SignUpScreen() {
       const user = signUpData.user ?? signUpData.session?.user;
       const session = signUpData.session;
 
-      if (user && session) {
-        // User is automatically verified and logged in
+      if (user) {
         // Try to create/update profile, but don't fail if it errors
         // The database trigger should create it automatically
         try {
@@ -38,11 +37,16 @@ export default function SignUpScreen() {
           // Log but don't fail signup - trigger should handle it
           console.warn("Profile creation failed, but trigger should handle it:", profileError);
         }
-        // Auth wrapper will automatically redirect to tabs
-        setInfo("Account created successfully! Redirecting...");
-      } else if (user) {
-        // User created but needs email verification (shouldn't happen with auto-confirm)
-        setInfo("Please check your email to verify your account.");
+        
+        if (session) {
+          // User is automatically verified and logged in
+          // Auth wrapper will automatically redirect to tabs
+          setInfo("Account created successfully! Redirecting...");
+        } else {
+          // If no session, the user will be auto-confirmed by the trigger
+          // Wait a moment and the auth state change will handle redirect
+          setInfo("Account created! Setting up your profile...");
+        }
       }
     } catch (err: any) {
       const message = err?.message ?? "Unable to sign up. Check details and try again.";
@@ -54,11 +58,11 @@ export default function SignUpScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-framez-midnight justify-center items-center">
-    <View className="flex-1 px-6 pt-16 min-h-screen md:w-9/10 lg:w-[700px] justify-center items-center">
+    <View className="flex-1 px-6 pt-16 min-h-screen w-full md:w-9/10 lg:w-[700px] items-center">
     <View className="items-center w-full">
         <Image
           source={require("../../assets/logo-removebg-preview2.png")}
-          className="h-24 w-24"
+          className="h-40 w-72"
           resizeMode="contain"
         />
       </View>

@@ -21,10 +21,29 @@ export const signUpUser = async (email: string, password: string, username: stri
       data: {
         username: username.trim(),
       },
+      // Auto-confirm the user (works if Supabase is configured for auto-confirm)
     },
   });
 
   if (error) throw error;
+  
+  // If user is created but not confirmed, try to sign them in immediately
+  // This handles the case where auto-confirm is enabled
+  if (data.user && !data.session) {
+    // Wait a moment for the trigger to confirm the user
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    
+    // Try to sign in to get the session
+    const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+      email: email.trim(),
+      password,
+    });
+    
+    if (!signInError && signInData) {
+      return signInData;
+    }
+  }
+  
   return data;
 };
 
