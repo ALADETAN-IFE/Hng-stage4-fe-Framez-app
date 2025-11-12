@@ -1,39 +1,22 @@
-import React, { createContext, ReactNode, useContext, useState } from 'react';
+import { useEffect, useState } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { useRouter } from "expo-router";
+import { auth } from "@/lib/firebase";
 
-type User = { name: string; email: string } | null;
+export default function AuthWrapper({ children }: { children: React.ReactNode }) {
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
-type AuthContextShape = {
-  user: User;
-  loading: boolean;
-  signIn: (user: User) => Promise<void>;
-  signOut: () => void;
-};
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) router.replace("/(tabs)");
+      else router.replace("/signin");
+      setLoading(false);
+    });
 
-const AuthContext = createContext<AuthContextShape | undefined>(undefined);
+    return unsubscribe;
+  }, []);
 
-export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User>(null);
-  const [loading] = useState(false);
-
-  const signIn = async (u: User) => {
-    // Replace this with real auth logic (Firebase/Supabase/etc.)
-    setUser(u);
-  };
-
-  const signOut = () => {
-    // Replace with real sign-out logic
-    setUser(null);
-  };
-
-  return (
-    <AuthContext.Provider value={{ user, loading, signIn, signOut }}>
-      {children}
-    </AuthContext.Provider>
-  );
-}
-
-export function useAuth() {
-  const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error('useAuth must be used within an AuthProvider');
-  return ctx;
+  if (loading) return null; // or splash screen
+  return children;
 }

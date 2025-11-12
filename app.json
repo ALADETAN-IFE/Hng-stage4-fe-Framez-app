@@ -4,7 +4,7 @@
     "slug": "framez",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon/logo-1024x1024.png",
+    "icon": "./assets/icon/icon.png",
     "scheme": "framez",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -34,11 +34,7 @@
         {
           "image": "./assets/logo-removebg-preview.png",
           "imageWidth": 250,
-          "resizeMode": "contain",
-          "backgroundColor": "#ffffff",
-          "dark": {
-            "backgroundColor": "#000000"
-          }
+          "resizeMode": "contain"
         }
       ]
     ],

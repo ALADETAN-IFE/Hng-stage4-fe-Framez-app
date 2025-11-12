@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { View, TextInput, Button, Text } from "react-native";
-import { loginUser } from "@/services/authService";
+import { signUpUser } from "@/services/authService";
 
-export default function SignInScreen() {
+export default function SignupScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
   const [error, setError] = useState("");
 
-  const handleLogin = async () => {
+  const handleSignup = async () => {
     try {
-      await loginUser(email, password);
+      await signUpUser(email, password, name);
     } catch (e: any) {
       setError(e.message);
     }
@@ -17,22 +18,16 @@ export default function SignInScreen() {
 
   return (
     <View style={{ padding: 20 }}>
-      <Text style={{ fontSize: 24, fontWeight: "bold" }}>Login</Text>
-      <TextInput
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        autoCapitalize="none"
-        style={{ marginVertical: 10 }}
-      />
+      <Text style={{ fontSize: 24, fontWeight: "bold" }}>Sign Up</Text>
+      <TextInput placeholder="Name" value={name} onChangeText={setName} />
+      <TextInput placeholder="Email" value={email} onChangeText={setEmail} />
       <TextInput
         placeholder="Password"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
-        style={{ marginVertical: 10 }}
       />
-      <Button title="Login" onPress={handleLogin} />
+      <Button title="Sign Up" onPress={handleSignup} />
       {error ? <Text style={{ color: "red" }}>{error}</Text> : null}
     </View>
   );

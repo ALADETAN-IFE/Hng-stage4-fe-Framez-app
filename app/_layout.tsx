@@ -7,17 +7,17 @@ import "./global.css";
 
 import UpdatePopup from '@/components/UpdatePopup';
 import { useColorScheme } from '@/hooks/use-color-scheme';
-import { AuthProvider } from '@/hooks/useAuth';
+import AuthWrapper from '@/hooks/useAuth';
 import { useCheckForUpdates } from '@/hooks/useCheckForUpdates';
 import { useState } from 'react';
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
-    const { updateMessage, isUpdateAvailable } = useCheckForUpdates();
+  const { updateMessage, isUpdateAvailable } = useCheckForUpdates();
   const [modalVisible, setModalVisible] = useState(true);
 
   return (
-    <AuthProvider>
+    <AuthWrapper>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         {Platform.OS !== 'web' && (
           <UpdatePopup
@@ -32,6 +32,6 @@ export default function RootLayout() {
         </Stack>
         <StatusBar style="auto" />
       </ThemeProvider>
-    </AuthProvider>
+    </AuthWrapper>
   );
 }
