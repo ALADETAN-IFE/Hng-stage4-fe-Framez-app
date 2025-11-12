@@ -16,7 +16,12 @@ export interface PostRecord {
   created_at: string;
 }
 
-export const createPost = async ({ authorId, authorUsername, content, imageUrl }: PostPayload) => {
+export const createPost = async ({
+  authorId,
+  authorUsername,
+  content,
+  imageUrl,
+}: PostPayload) => {
   const { error } = await supabase.from("posts").insert({
     author_id: authorId,
     author_username: authorUsername,
@@ -59,3 +64,37 @@ export const fetchPostsByUser = async (authorId: string) => {
   return (data ?? []) as PostRecord[];
 };
 
+export const deletePost = async (postId: string, imageUrl?: string | null) => {
+  try {
+    // If an imageUrl is provided and looks like it references the 'posts' bucket,
+    // try to remove the file from Supabase Storage. We attempt to extract the
+    // path after '/posts/' in the public URL which matches the upload path.
+    if (imageUrl) {
+      try {
+        const idx = imageUrl.indexOf("/posts/");
+        if (idx !== -1) {
+          const filePath = imageUrl.substring(idx + 1); // remove leading '/'
+          // filePath will be like 'posts/userId/12345.jpg'
+          const { error: storageError } = await supabase.storage
+            .from("posts")
+            .remove([filePath.replace(/^posts\//, "")]);
+          if (storageError) {
+            // log but don't fail the whole operation
+            console.warn("Failed to remove image from storage", storageError);
+          }
+        }
+      } catch (err) {
+        console.warn("Error while attempting to delete image file:", err);
+      }
+    }
+
+    const { error } = await supabase.from("posts").delete().eq("id", postId);
+    if (error) {
+      console.error("Failed to delete post", error);
+      throw error;
+    }
+  } catch (err) {
+    console.error("deletePost error", err);
+    throw err;
+  }
+};

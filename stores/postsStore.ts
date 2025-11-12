@@ -1,6 +1,12 @@
 import { create } from "zustand";
 
-import { createPost, fetchFeedPosts, fetchPostsByUser, PostRecord } from "@/services/postsService";
+import {
+  createPost,
+  fetchFeedPosts,
+  fetchPostsByUser,
+  PostRecord,
+  deletePost as serviceDeletePost,
+} from "@/services/postsService";
 
 interface PostsState {
   feedPosts: PostRecord[];
@@ -16,6 +22,7 @@ interface PostsState {
     content: string;
     imageUrl?: string | null;
   }) => Promise<void>;
+  deletePost: (postId: string, authorId?: string) => Promise<void>;
   clearError: () => void;
 }
 
@@ -32,7 +39,10 @@ export const usePostsStore = create<PostsState>((set, get) => ({
       set({ feedPosts: posts, isLoading: false });
     } catch (err) {
       console.error("Failed to load feed posts", err);
-      set({ error: "Unable to load posts. Pull to refresh to try again.", isLoading: false });
+      set({
+        error: "Unable to load posts. Pull to refresh to try again.",
+        isLoading: false,
+      });
     }
   },
   loadUserPosts: async (userId: string) => {
@@ -42,7 +52,10 @@ export const usePostsStore = create<PostsState>((set, get) => ({
       set({ userPosts: posts, isLoading: false });
     } catch (err) {
       console.error("Failed to load user posts", err);
-      set({ error: "Unable to load your posts. Pull to refresh to try again.", isLoading: false });
+      set({
+        error: "Unable to load your posts. Pull to refresh to try again.",
+        isLoading: false,
+      });
     }
   },
   addPost: async (payload) => {
@@ -54,9 +67,28 @@ export const usePostsStore = create<PostsState>((set, get) => ({
       set({ isSubmitting: false });
     } catch (err) {
       console.error("Failed to create post", err);
-      set({ error: "We couldn't share your post. Please try again.", isSubmitting: false });
+      set({
+        error: "We couldn't share your post. Please try again.",
+        isSubmitting: false,
+      });
+    }
+  },
+  // delete a post and refresh lists
+  deletePost: async (postId: string, authorId?: string) => {
+    set({ isSubmitting: true, error: null });
+    try {
+      await serviceDeletePost(postId);
+      // Reload feed and (optionally) user posts if the deleted post belonged to current user
+      await get().loadFeedPosts();
+      if (authorId) await get().loadUserPosts(authorId);
+      set({ isSubmitting: false });
+    } catch (err) {
+      console.error("Failed to delete post", err);
+      set({
+        error: "Unable to delete post. Please try again.",
+        isSubmitting: false,
+      });
     }
   },
   clearError: () => set({ error: null }),
 }));
-
