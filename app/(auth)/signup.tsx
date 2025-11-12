@@ -22,8 +22,10 @@ export default function SignUpScreen() {
     try {
       const signUpData = await signUpUser(email, password, username);
       const user = signUpData.user ?? signUpData.session?.user;
+      const session = signUpData.session;
 
-      if (user) {
+      if (user && session) {
+        // User is automatically verified and logged in
         // Try to create/update profile, but don't fail if it errors
         // The database trigger should create it automatically
         try {
@@ -36,11 +38,12 @@ export default function SignUpScreen() {
           // Log but don't fail signup - trigger should handle it
           console.warn("Profile creation failed, but trigger should handle it:", profileError);
         }
+        // Auth wrapper will automatically redirect to tabs
+        setInfo("Account created successfully! Redirecting...");
+      } else if (user) {
+        // User created but needs email verification (shouldn't happen with auto-confirm)
+        setInfo("Please check your email to verify your account.");
       }
-
-      setInfo(
-        "Check your inbox to verify your email. You'll be redirected once the account is confirmed."
-      );
     } catch (err: any) {
       const message = err?.message ?? "Unable to sign up. Check details and try again.";
       setError(message);

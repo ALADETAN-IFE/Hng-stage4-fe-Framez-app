@@ -17,6 +17,7 @@ export const signUpUser = async (email: string, password: string, username: stri
     email: email.trim(),
     password,
     options: {
+      emailRedirectTo: undefined, // No email redirect needed
       data: {
         username: username.trim(),
       },
