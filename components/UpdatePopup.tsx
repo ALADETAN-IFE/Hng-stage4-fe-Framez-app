@@ -33,13 +33,13 @@ const UpdatePopup: React.FC<UpdatePopupProps> = ({
             <View className="self-end gap-3 flex-row justify-between">
               <TouchableOpacity
                 onPress={onClose}
-                className="bg-blue-500 rounded-lg px-6 py-2"
+                className="bg-framez-accent rounded-lg px-6 py-2"
               >
                 <Text className="text-white text-center">Update Later</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={handleUpdate}
-                className="bg-blue-500 rounded-lg px-6 py-2"
+                className="bg-framez-accent rounded-lg px-6 py-2"
               >
                 <Text className="text-white text-center">Update Now</Text>
               </TouchableOpacity>
@@ -47,7 +47,7 @@ const UpdatePopup: React.FC<UpdatePopupProps> = ({
           ) : message !== "Checking for updates..." ? (
             <TouchableOpacity
               onPress={onClose}
-              className="bg-blue-500 rounded-full px-6 py-2"
+              className="bg-framez-accent rounded-full px-6 py-2"
             >
               <Text className="text-white text-center">Close</Text>
             </TouchableOpacity>

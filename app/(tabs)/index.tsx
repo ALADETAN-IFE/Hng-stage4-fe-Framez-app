@@ -139,7 +139,7 @@ export default function HomeScreen() {
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
                 className="w-full"
               >
-                <View className="rounded-3xl bg-framez-slate/60 p-5 shadow-lg shadow-black/80">
+                <View className="rounded-3xl bg-framez-slate/80 p-5">
                   <View className="flex-row items-center justify-between mb-3">
                     <Text className="text-lg font-semibold text-white">
                       Create a frame
