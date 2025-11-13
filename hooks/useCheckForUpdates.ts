@@ -18,7 +18,7 @@ export function useCheckForUpdates() {
         console.log('Runtime version:', Updates.runtimeVersion);
         const update = await Updates.checkForUpdateAsync();
         if (update.isAvailable) {
-          setUpdateMessage("Update available. Reload to update.");
+          setUpdateMessage("Update available. Please update to the latest version.");
           setIsUpdateAvailable(true);
         } else {
           setUpdateMessage("You're using the latest version.");
